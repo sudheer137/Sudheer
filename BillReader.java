@@ -23,56 +23,7 @@ public class BillReader {
     public static void main(String[] args) {
     	String[]phoneNumbers= {"201-702-3929","330-501-4669","469-617-1147","803-693-2543","803-792-2439","803-992-3317","803-992-3443","980-616-1500"};
         try {
-        	/*
-            File file = new File("G:/TV/MyBill_20230325.pdf");
-            PDDocument document = PDDocument.load(file);
-
-            // Instantiate PDFTextStripper class
-            PDFTextStripper pdfStripper = new PDFTextStripper();
-            for(int i=document.getNumberOfPages()-1;i>12;i--) {
-            	document.removePage(i);
-            }
-            
-            System.out.println(document.getNumberOfPages());
-            
-            // Retrieving text from PDF document
-            String text = pdfStripper.getText(document);
-            
-            // Printing the text
-            System.out.println(text);
-            Stream<String> line=text.lines();
-            		
-            String[] data = text.split("\n+");
-            
-
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet sheet = workbook.createSheet("pdf content");
-            for(int i=0;i<data.length;i++) {
-            Row row = sheet.createRow(i);
-            		String[] data2=	data[i].split("\\s+");
-            			for(int j=0;j<data2.length;j++) {
-                        Cell cell = row.createCell(j);
-                        cell.setCellValue(data2[j]);
-                    }
-            	}
-            		
-          
-            FileOutputStream outputStream = new FileOutputStream("G:/TV/template1.xlsx");
-            
-            workbook.write(outputStream);
-
-            // Closing the workbook
-            workbook.close();
-
-            // Closing the document
-            document.close();
-
-            System.out.println("PDF content written to Excel successfully!");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-   */   File files = new File("G:/TV/MyBill_20240325.pdf");
+        	File files = new File("G:/TV/MyBill_20240325.pdf");
             PDDocument document = PDDocument.load(files);
             int year=Integer.parseInt( "G:/TV/MyBill_20240325.pdf".substring(13, 17));
             String month="G:/TV/MyBill_20240325.pdf".substring(15, 16);
@@ -171,7 +122,7 @@ public class BillReader {
 							
 							
 						}
-						//System.out.println(xcell.getStringCellValue() + ",");
+						
 						
 					} 
 					
