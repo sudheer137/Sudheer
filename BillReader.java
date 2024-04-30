@@ -23,9 +23,13 @@ public class BillReader {
     public static void main(String[] args) {
     	String[]phoneNumbers= {"201-702-3929","330-501-4669","469-617-1147","803-693-2543","803-792-2439","803-992-3317","803-992-3443","980-616-1500"};
         try {
-        	File files = new File("G:/TV/MyBill_20240325.pdf");
+        	File files = new File("G:/TV/MyBill_20220425.pdf");
             PDDocument document = PDDocument.load(files);
-            int year=Integer.parseInt( "G:/TV/MyBill_20240325.pdf".substring(13, 17));
+            int year=(int)Integer.parseInt( "G:/TV/MyBill_20220425.pdf".substring(13, 17));
+            int x=1;
+            if(year==2024) {
+            	x=2;
+            }
             String month="G:/TV/MyBill_20240325.pdf".substring(15, 16);
             // Instantiate PDFTextStripper class
             PDFTextStripper pdfStripper = new PDFTextStripper();
@@ -77,6 +81,8 @@ public class BillReader {
 			int number=0;
 			int rowindex = 0;
 			sheet2.getLastRowNum();
+			
+			outer:	while(phoneNumbers.length>number) {
 			for(rowindex=0;rowindex<sheet2.getLastRowNum()-1;rowindex++) {
 				
 			
@@ -88,35 +94,33 @@ public class BillReader {
 
 					if (xcell.getCellTypeEnum() == CellType.STRING) {
 						if(number==phoneNumbers.length) {
-							break;
+							break outer;
 						}
 						if(xcell.getStringCellValue().equals(phoneNumbers[number])) {
 							
-							XSSFRow row=	sheet2.getRow((rowindex)-2);
-							if (row.getCell(0).getCellTypeEnum()==CellType.BLANK) {
-								System.out.print("NONE,");
-							}
+							XSSFRow row=	sheet2.getRow((rowindex)-x);
+							
 							
 							if (row.getCell(0).getCellTypeEnum()==CellType.STRING) {
 								System.out.print(row.getCell(0).getStringCellValue()+" ");
 							}
-							if (row.getCell(1).getCellTypeEnum()==CellType.BLANK) {
-								System.out.print("NONE,");
-							}
+							
 							if (row.getCell(1).getCellTypeEnum()==CellType.STRING) {
 								System.out.println(row.getCell(1).getStringCellValue());
 							}
-							if (row.getCell(2).getCellTypeEnum() == CellType.BLANK) {
-								System.out.print("NONE,");
-							}
+							if(x==2) {
+							
 							if (row.getCell(2).getCellTypeEnum()==CellType.STRING) {
 								System.out.println(row.getCell(2).getStringCellValue());
 							}
-							
-							
-							
-							
-							
+							}
+							else {
+								row=	sheet2.getRow((rowindex)+1);
+								if (row.getCell(0).getCellTypeEnum()==CellType.STRING) {
+									System.out.println(row.getCell(0).getStringCellValue());
+								}
+							}
+											
 							number=number+1;
 							
 							
@@ -129,7 +133,13 @@ public class BillReader {
 				}
 				
 			}
+			if(number<phoneNumbers.length) {
+				number=number+1;
+			}
 			
+			}
+			
+				
 			
 
 			file.close();
