@@ -21,7 +21,9 @@ public class BillReader {
 	
 	
     public static void main(String[] args) {
-    	String[]phoneNumbers= {"201-702-3929","330-501-4669","469-617-1147","803-693-2543","803-792-2439","803-992-3317","803-992-3443","980-616-1500"};
+    	String[]phoneNumbers= {"201-702-3929","330-501-4669","469-617-1147","803-693-2543",
+    			"803-792-2439","803-992-3317","803-992-3443",
+    			"980-616-1500","803-203-9530","773-575-9355","615-487-3250","615-487-3250","803-693-2505"};
         try {
         	File files = new File("G:/TV/MyBill_20220425.pdf");
             PDDocument document = PDDocument.load(files);
@@ -99,7 +101,7 @@ public class BillReader {
 						if(xcell.getStringCellValue().equals(phoneNumbers[number])) {
 							
 							XSSFRow row=	sheet2.getRow((rowindex)-x);
-							
+							System.out.println(phoneNumbers[number]);
 							
 							if (row.getCell(0).getCellTypeEnum()==CellType.STRING) {
 								System.out.print(row.getCell(0).getStringCellValue()+" ");
@@ -134,6 +136,7 @@ public class BillReader {
 				
 			}
 			if(number<phoneNumbers.length) {
+				System.out.println(phoneNumbers[number]);
 				number=number+1;
 			}
 			
