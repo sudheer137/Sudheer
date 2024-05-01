@@ -1,5 +1,8 @@
 package com.vgen.wemeat.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +25,8 @@ public class TotalBillForMonthServices {
 		totalBillForMonthRepositrory.save(totalBillForMonth);
 	}
 	
-
+	public List<TotalBillForMonth> findbyMonthandYear(int year,int month){
+		
+		return totalBillForMonthRepositrory.findByYearandMonth(year, month);
+	}
 }

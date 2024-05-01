@@ -23,8 +23,8 @@ public class TotalBillForMonth {
 	@Column(name = "name", nullable = false)
 	private String Name;
 	@Column(name = "month", nullable = false)
-	private String month;
-	@Column(name = "Year", nullable = false)
+	private int month;
+	@Column(name = "year", nullable = false)
 	private int Year;
 	@Column(name = "bill_amount", nullable = false)
 	private String BillAmount;

@@ -45,18 +45,25 @@ public class TotalBillForMonthController {
     @PostMapping
 	    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile files) {
 		    
-		    
+    	
 		    
 		 try {
-			
-	            //File file = new File("G:/TV/MyBill_20230325.pdf");
+			 
+	            
 	            PDDocument document = PDDocument.load(files.getInputStream());
 	            int year=Integer.parseInt( files.getOriginalFilename().substring(7, 11));
-	            String month=files.getOriginalFilename().substring(11, 13);
+	            int month=Integer.parseInt(files.getOriginalFilename().substring(11, 13));
 	            int x=1;
 	            if(year==2024) {
 	            	x=2;
 	            }
+	            var MonthandYear=	totalBillForMonthServices.findbyMonthandYear(year, month);
+	            if (!(MonthandYear.isEmpty())) {
+	            	document.close();
+					return ResponseEntity.status(HttpStatus.FOUND)
+							.body(String.format("File not Uploaded: %s", files.getOriginalFilename() + " files is  fond"));
+				}
+	           
 	            // Instantiate PDFTextStripper class
 	            PDFTextStripper pdfStripper = new PDFTextStripper();
 	            for(int i=document.getNumberOfPages()-1;i>12;i--) {
@@ -86,7 +93,7 @@ public class TotalBillForMonthController {
 	                    }
 	            	}
 	            		
-	          String FileName="G:/TV/template.xlsx";
+	          String FileName="../template.xlsx";
 	            FileOutputStream outputStream = new FileOutputStream(FileName);
 	            
 	            workbook.write(outputStream);
@@ -170,18 +177,11 @@ public class TotalBillForMonthController {
 					}
 					
 					}
-				
-				
-
 				file.close();
 				workbook.close();
 				
-	            
-	            
-	            
-
-	            System.out.println("PDF content written to Excel successfully!");
-
+				System.out.println("PDF content written to Excel successfully!");
+	           
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -189,8 +189,10 @@ public class TotalBillForMonthController {
      
      
     
+		 return ResponseEntity.status(HttpStatus.OK)
+					.body(String.format("File  Uploaded: %s", files.getOriginalFilename() + " files is Ok"));
+		
 		 
-		 
-		 return ResponseEntity.status(HttpStatus.OK).build();
+		 //return ResponseEntity.status(HttpStatus.OK).build();
 	 }
 }
